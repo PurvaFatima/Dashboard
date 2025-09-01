@@ -17,14 +17,14 @@ const Card = ({
 
   return (
     <div 
-      className={`bg-white rounded-xl shadow-md overflow-hidden transition-all duration-200 hover:shadow-lg ${
-        onClick ? 'cursor-pointer' : ''
+      className={`bg-white rounded-xl shadow-sm hover:shadow-md transition-all duration-300 overflow-hidden border border-gray-100 ${
+        onClick ? 'cursor-pointer hover:border-blue-200' : ''
       } ${className}`}
       onClick={handleClick}
       {...props}
     >
       {title && (
-        <div className="px-6 py-4 border-b border-gray-100">
+        <div className="px-6 py-4 border-b border-gray-100 bg-gradient-to-r from-gray-50 to-white">
           <h3 className="text-lg font-semibold text-gray-900">{title}</h3>
         </div>
       )}

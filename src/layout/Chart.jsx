@@ -20,6 +20,29 @@ import {
 
 const COLORS = ['#3b82f6', '#10b981', '#f59e0b', '#ef4444', '#8b5cf6', '#ec4899'];
 
+const CustomTooltip = ({ active, payload, label }) => {
+  if (active && payload && payload.length) {
+    return (
+      <div className="bg-white p-4 rounded-lg shadow-lg border border-gray-200">
+        <p className="font-semibold text-gray-900">{label}</p>
+        {payload.map((entry, index) => (
+          <p key={index} className="text-sm" style={{ color: entry.color }}>
+            {entry.name}: {entry.value.toLocaleString()}
+          </p>
+        ))}
+      </div>
+    );
+  }
+
+  return null;
+};
+
+CustomTooltip.propTypes = {
+  active: PropTypes.bool,
+  payload: PropTypes.array,
+  label: PropTypes.string,
+};
+
 const Chart = ({ 
   type = 'bar', 
   data = [], 
@@ -46,17 +69,9 @@ const Chart = ({
               tick={{ fill: '#6b7280' }} 
               tickLine={false}
               axisLine={false}
+              tickFormatter={(value) => value.toLocaleString()}
             />
-            <Tooltip 
-              contentStyle={{ 
-                backgroundColor: 'white', 
-                borderRadius: '0.5rem',
-                border: '1px solid #e5e7eb',
-                boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)'
-              }}
-              itemStyle={{ color: '#1f2937' }}
-              labelStyle={{ fontWeight: 'bold', color: '#1f2937' }}
-            />
+            <Tooltip content={<CustomTooltip />} />
             <Legend 
               wrapperStyle={{ color: '#374151' }}
             />
@@ -87,17 +102,9 @@ const Chart = ({
               tick={{ fill: '#6b7280' }} 
               tickLine={false}
               axisLine={false}
+              tickFormatter={(value) => value.toLocaleString()}
             />
-            <Tooltip 
-              contentStyle={{ 
-                backgroundColor: 'white', 
-                borderRadius: '0.5rem',
-                border: '1px solid #e5e7eb',
-                boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)'
-              }}
-              itemStyle={{ color: '#1f2937' }}
-              labelStyle={{ fontWeight: 'bold', color: '#1f2937' }}
-            />
+            <Tooltip content={<CustomTooltip />} />
             <Legend 
               wrapperStyle={{ color: '#374151' }}
             />
@@ -129,14 +136,7 @@ const Chart = ({
                 <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
               ))}
             </Pie>
-            <Tooltip 
-              contentStyle={{ 
-                backgroundColor: 'white', 
-                borderRadius: '0.5rem',
-                border: '1px solid #e5e7eb',
-                boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)'
-              }}
-            />
+            <Tooltip content={<CustomTooltip />} />
             <Legend 
               wrapperStyle={{ color: '#374151' }}
               layout="horizontal"
@@ -167,17 +167,7 @@ const Chart = ({
               tickLine={false}
               axisLine={false}
             />
-            <Tooltip 
-              cursor={{ strokeDasharray: '3 3' }}
-              contentStyle={{ 
-                backgroundColor: 'white', 
-                borderRadius: '0.5rem',
-                border: '1px solid #e5e7eb',
-                boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)'
-              }}
-              itemStyle={{ color: '#1f2937' }}
-              labelStyle={{ fontWeight: 'bold', color: '#1f2937' }}
-            />
+            <Tooltip content={<CustomTooltip />} cursor={{ strokeDasharray: '3 3' }} />
             <Legend 
               wrapperStyle={{ color: '#374151' }}
             />
@@ -209,16 +199,7 @@ const Chart = ({
               tickLine={false}
               axisLine={false}
             />
-            <Tooltip 
-              contentStyle={{ 
-                backgroundColor: 'white', 
-                borderRadius: '0.5rem',
-                border: '1px solid #e5e7eb',
-                boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)'
-              }}
-              itemStyle={{ color: '#1f2937' }}
-              labelStyle={{ fontWeight: 'bold', color: '#1f2937' }}
-            />
+            <Tooltip content={<CustomTooltip />} />
             <Legend 
               wrapperStyle={{ color: '#374151' }}
             />
