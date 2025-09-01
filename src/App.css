@@ -1,0 +1,32 @@
+/* Custom styles for the dashboard */
+.dashboard-container {
+  display: flex;
+  min-height: 100vh;
+}
+
+.sidebar {
+  width: 256px;
+  background-color: #1f2937;
+  color: white;
+  transition: all 0.3s ease;
+}
+
+.main-content {
+  flex: 1;
+  background-color: #f9fafb;
+  padding: 1.5rem;
+}
+
+@media (max-width: 640px) {
+  .sidebar {
+    width: 64px;
+  }
+  
+  .sidebar .nav-text {
+    display: none;
+  }
+  
+  .main-content {
+    margin-left: 64px;
+  }
+}
