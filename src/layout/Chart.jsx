@@ -18,7 +18,7 @@ import {
   Cell
 } from 'recharts';
 
-const COLORS = ['#0088FE', '#00C49F', '#FFBB28', '#FF8042', '#8884D8', '#82CA9D'];
+const COLORS = ['#3b82f6', '#10b981', '#f59e0b', '#ef4444', '#8b5cf6', '#ec4899'];
 
 const Chart = ({ 
   type = 'bar', 
@@ -33,13 +33,38 @@ const Chart = ({
     switch (type) {
       case 'bar':
         return (
-          <BarChart data={data}>
-            <CartesianGrid strokeDasharray="3 3" />
-            <XAxis dataKey={dataKeyX} />
-            <YAxis />
-            <Tooltip />
-            <Legend />
-            <Bar dataKey={dataKeyY} fill="#8884d8">
+          <BarChart data={data} margin={{ top: 20, right: 30, left: 20, bottom: 50 }}>
+            <CartesianGrid strokeDasharray="3 3" stroke="#e5e7eb" />
+            <XAxis 
+              dataKey={dataKeyX} 
+              stroke="#6b7280" 
+              tick={{ fill: '#6b7280' }} 
+              tickLine={false}
+            />
+            <YAxis 
+              stroke="#6b7280" 
+              tick={{ fill: '#6b7280' }} 
+              tickLine={false}
+              axisLine={false}
+            />
+            <Tooltip 
+              contentStyle={{ 
+                backgroundColor: 'white', 
+                borderRadius: '0.5rem',
+                border: '1px solid #e5e7eb',
+                boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)'
+              }}
+              itemStyle={{ color: '#1f2937' }}
+              labelStyle={{ fontWeight: 'bold', color: '#1f2937' }}
+            />
+            <Legend 
+              wrapperStyle={{ color: '#374151' }}
+            />
+            <Bar 
+              dataKey={dataKeyY} 
+              fill="#3b82f6"
+              radius={[4, 4, 0, 0]}
+            >
               {data.map((entry, index) => (
                 <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
               ))}
@@ -49,24 +74,47 @@ const Chart = ({
       
       case 'line':
         return (
-          <LineChart data={data}>
-            <CartesianGrid strokeDasharray="3 3" />
-            <XAxis dataKey={dataKeyX} />
-            <YAxis />
-            <Tooltip />
-            <Legend />
+          <LineChart data={data} margin={{ top: 20, right: 30, left: 20, bottom: 50 }}>
+            <CartesianGrid strokeDasharray="3 3" stroke="#e5e7eb" />
+            <XAxis 
+              dataKey={dataKeyX} 
+              stroke="#6b7280" 
+              tick={{ fill: '#6b7280' }} 
+              tickLine={false}
+            />
+            <YAxis 
+              stroke="#6b7280" 
+              tick={{ fill: '#6b7280' }} 
+              tickLine={false}
+              axisLine={false}
+            />
+            <Tooltip 
+              contentStyle={{ 
+                backgroundColor: 'white', 
+                borderRadius: '0.5rem',
+                border: '1px solid #e5e7eb',
+                boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)'
+              }}
+              itemStyle={{ color: '#1f2937' }}
+              labelStyle={{ fontWeight: 'bold', color: '#1f2937' }}
+            />
+            <Legend 
+              wrapperStyle={{ color: '#374151' }}
+            />
             <Line 
               type="monotone" 
               dataKey={dataKeyY} 
-              stroke="#8884d8" 
-              activeDot={{ r: 8 }} 
+              stroke="#3b82f6" 
+              activeDot={{ r: 8, fill: '#3b82f6' }} 
+              strokeWidth={2}
+              dot={{ strokeWidth: 2, r: 4, fill: '#3b82f6' }}
             />
           </LineChart>
         );
       
       case 'pie':
         return (
-          <PieChart>
+          <PieChart margin={{ top: 20, right: 30, left: 20, bottom: 20 }}>
             <Pie
               data={data}
               cx="50%"
@@ -81,32 +129,100 @@ const Chart = ({
                 <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
               ))}
             </Pie>
-            <Tooltip />
-            <Legend />
+            <Tooltip 
+              contentStyle={{ 
+                backgroundColor: 'white', 
+                borderRadius: '0.5rem',
+                border: '1px solid #e5e7eb',
+                boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)'
+              }}
+            />
+            <Legend 
+              wrapperStyle={{ color: '#374151' }}
+              layout="horizontal"
+              verticalAlign="bottom"
+              align="center"
+            />
           </PieChart>
         );
       
       case 'scatter':
         return (
-          <ScatterChart data={data}>
-            <CartesianGrid strokeDasharray="3 3" />
-            <XAxis type="number" dataKey={dataKeyX} name={dataKeyX} />
-            <YAxis type="number" dataKey={dataKeyY} name={dataKeyY} />
-            <Tooltip cursor={{ strokeDasharray: '3 3' }} />
-            <Legend />
-            <Scatter name={title} data={data} fill="#8884d8" />
+          <ScatterChart data={data} margin={{ top: 20, right: 30, left: 20, bottom: 50 }}>
+            <CartesianGrid strokeDasharray="3 3" stroke="#e5e7eb" />
+            <XAxis 
+              type="number" 
+              dataKey={dataKeyX} 
+              name={dataKeyX} 
+              stroke="#6b7280" 
+              tick={{ fill: '#6b7280' }} 
+              tickLine={false}
+            />
+            <YAxis 
+              type="number" 
+              dataKey={dataKeyY} 
+              name={dataKeyY} 
+              stroke="#6b7280" 
+              tick={{ fill: '#6b7280' }} 
+              tickLine={false}
+              axisLine={false}
+            />
+            <Tooltip 
+              cursor={{ strokeDasharray: '3 3' }}
+              contentStyle={{ 
+                backgroundColor: 'white', 
+                borderRadius: '0.5rem',
+                border: '1px solid #e5e7eb',
+                boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)'
+              }}
+              itemStyle={{ color: '#1f2937' }}
+              labelStyle={{ fontWeight: 'bold', color: '#1f2937' }}
+            />
+            <Legend 
+              wrapperStyle={{ color: '#374151' }}
+            />
+            <Scatter 
+              name={title} 
+              data={data} 
+              fill="#3b82f6"
+            >
+              {data.map((entry, index) => (
+                <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
+              ))}
+            </Scatter>
           </ScatterChart>
         );
       
       default:
         return (
-          <BarChart data={data}>
-            <CartesianGrid strokeDasharray="3 3" />
-            <XAxis dataKey={dataKeyX} />
-            <YAxis />
-            <Tooltip />
-            <Legend />
-            <Bar dataKey={dataKeyY} fill="#8884d8" />
+          <BarChart data={data} margin={{ top: 20, right: 30, left: 20, bottom: 50 }}>
+            <CartesianGrid strokeDasharray="3 3" stroke="#e5e7eb" />
+            <XAxis 
+              dataKey={dataKeyX} 
+              stroke="#6b7280" 
+              tick={{ fill: '#6b7280' }} 
+              tickLine={false}
+            />
+            <YAxis 
+              stroke="#6b7280" 
+              tick={{ fill: '#6b7280' }} 
+              tickLine={false}
+              axisLine={false}
+            />
+            <Tooltip 
+              contentStyle={{ 
+                backgroundColor: 'white', 
+                borderRadius: '0.5rem',
+                border: '1px solid #e5e7eb',
+                boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)'
+              }}
+              itemStyle={{ color: '#1f2937' }}
+              labelStyle={{ fontWeight: 'bold', color: '#1f2937' }}
+            />
+            <Legend 
+              wrapperStyle={{ color: '#374151' }}
+            />
+            <Bar dataKey={dataKeyY} fill="#3b82f6" />
           </BarChart>
         );
     }
