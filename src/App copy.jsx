@@ -1,3 +1,4 @@
+import Sidebar from './components/ui/sidebar';
 import Header from './layout/Header';
 import Card from './layout/Card';
 import MainContent from './layout/MainContent';
@@ -5,8 +6,6 @@ import Chart from './layout/Chart';
 import Footer from './layout/Footer';
 import SalesChart from './layout/SalesChart';
 import { useMetricsData } from './hooks/useMetricsData';
-import { Sidebar } from "@/components/ui/sidebar"
-
 import { 
   useBarChartData, 
   useLineChartData, 
@@ -107,24 +106,7 @@ function App() {
               subtitle="Welcome to your dashboard" 
               actions={headerActions} 
             />
-            <SidebarProvider >
-      <Sidebar />
-      <main>
-        <SidebarTrigger />
-        <MainContent>
-          <Header
-            title="Dashboard Overview"
-            subtitle="Loading dashboard data..."
-          />
-          <div className="flex justify-center items-center h-64">
-            <div className="text-center">
-              <div className="inline-block animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-blue-500 mb-4"></div>
-              <p className="text-gray-600">Loading dashboard data...</p>
-            </div>
-          </div>
-        </MainContent>
-      </main>
-    </SidebarProvider>
+            
             {/* Metrics Grid */}
             <section className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-6">
               {metricsData && metricsData.map((metric) => (
