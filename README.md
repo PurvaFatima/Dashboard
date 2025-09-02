@@ -1,91 +1,91 @@
 # My Dashboard
 
-A modern, responsive dashboard application built with React and Vite. This project features a clean, professional design with real-time data visualization capabilities.
-
-## Table of Contents
-- [Technologies Used](#technologies-used)
-- [Project Structure](#project-structure)
-- [Features](#features)
-- [File Documentation](#file-documentation)
-- [Installation](#installation)
-- [Usage](#usage)
-- [Customization](#customization)
-- [Deployment](#deployment)
-
-## Technologies Used
-
-### Core Technologies
-- **React 18+** - JavaScript library for building user interfaces
-- **Vite** - Next generation frontend tooling
-- **Tailwind CSS** - Utility-first CSS framework
-- **Recharts** - Declarative charting library built on D3.js
-
-### Development Tools
-- **ESLint** - JavaScript linting utility
-- **PropTypes** - Runtime type checking for React props
-- **npm** - Package manager
-
-## Project Structure
-
-```
-my-dashboard/
-├── public/
-│   └── vite.svg
-├── src/
-│   ├── assets/
-│   │   └── Avatar.png
-│   ├── hooks/
-│   ├── layout/
-│   │   ├── Card.jsx
-│   │   ├── Chart.jsx
-│   │   ├── Footer.jsx
-│   │   ├── Header.jsx
-│   │   ├── MainContent.jsx
-│   │   └── Sidebar.jsx
-│   ├── services/
-│   ├── App.css
-│   ├── App.jsx
-│   ├── index.css
-│   └── main.jsx
-├── .gitignore
-├── index.html
-├── package.json
-├── README.md
-├── vite.config.js
-└── eslint.config.js
-```
+A modern dashboard application built with React, featuring a customizable sidebar UI component.
 
 ## Features
 
-1. **Responsive Design** - Works on mobile, tablet, and desktop devices
-2. **Component-based Architecture** - Reusable, maintainable components
-3. **Data Visualization** - Multiple chart types (bar, line, pie, scatter)
-4. **Modern UI** - Clean, professional interface with Tailwind CSS
-5. **Performance Optimized** - Fast loading with Vite
-6. **Accessibility** - Proper semantic HTML and ARIA attributes
+- Responsive sidebar with collapsible and offcanvas modes
+- Keyboard shortcut support for toggling sidebar (`Ctrl+B` / `Cmd+B`)
+- Mobile-friendly sidebar using Sheet modal
+- Sidebar menu with support for groups, actions, badges, skeleton loading, and tooltips
+- Easily customizable sidebar appearance and behavior via props
+- Built with Radix UI, Lucide icons, and Tailwind CSS utility classes
 
-## File Documentation
+## Sidebar Component
 
-### Root Files
+The sidebar UI is implemented in [`src/components/ui/sidebar.jsx`](src/components/ui/sidebar.jsx) and provides:
 
-#### `index.html`
-- Main HTML template file
-- Entry point for the application
-- Contains root div where React app is mounted
-- Includes viewport meta tag for responsive design
+- Context-based state management (`SidebarProvider`, `useSidebar`)
+- Multiple sidebar variants: floating, inset, icon-only, offcanvas, etc.
+- Menu items, submenus, actions, badges, and skeleton loaders
+- Header, footer, separators, and input support
+- Tooltip integration for collapsed sidebar state
 
-#### `package.json`
-- Project metadata and dependencies
-- Scripts for development, building, and linting
-- Dependencies: React, React DOM, Tailwind CSS, Recharts
-- Dev Dependencies: ESLint, Vite plugins
+## Getting Started
 
-#### `vite.config.js`
-- Vite configuration file
-- Configures build settings and plugins
-- Includes React plugin for JSX transformation
+### Prerequisites
 
-#### `eslint.config.js`
+- Node.js (v18+ recommended)
+- npm or yarn
+
+### Installation
+
+```bash
+npm install
+# or
+yarn install
+```
+
+### Running the App
+
+```bash
+npm run dev
+# or
+yarn dev
+```
+
+Open [http://localhost:3000](http://localhost:3000) in your browser.
+
+## Usage
+
+Import and use the sidebar components in your pages:
+
+```jsx
+import {
+  SidebarProvider,
+  Sidebar,
+  SidebarMenu,
+  SidebarMenuItem,
+  SidebarMenuButton,
+  // ...other exports
+} from "@/components/ui/sidebar";
+
+function AppLayout() {
+  return (
+    <SidebarProvider>
+      <Sidebar>
+        <SidebarMenu>
+          <SidebarMenuItem>
+            <SidebarMenuButton>Dashboard</SidebarMenuButton>
+          </SidebarMenuItem>
+          {/* ...other menu items */}
+        </SidebarMenu>
+      </Sidebar>
+      {/* Main content */}
+    </SidebarProvider>
+  );
+}
+```
+
+## Customization
+
+- Adjust sidebar width, variant, and collapsibility via props.
+- Use context (`useSidebar`) for advanced sidebar state control.
+- Style using Tailwind CSS classes or override with your own.
+
+## License
+
+MIT
 - ESLint configuration
 - Code quality and formatting rules
 - React-specific linting rules
