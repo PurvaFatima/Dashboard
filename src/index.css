@@ -1,4 +1,9 @@
- @import "tailwindcss";
+h1.sidebar-heading {
+  font-size: 2rem;
+  line-height: 1.25;
+  font-weight: 600;
+}
+@import "tailwindcss";
 @import "tw-animate-css";
 
 @custom-variant dark (&:is(.dark *));
@@ -71,7 +76,18 @@ body {
 #root {
   flex: 1;
   display: flex;
-  flex-direction: column;
+  flex-direction: row; /* Sidebar and content side by side */
+  min-height: 100vh;
+}
+
+/* 
+  Responsive adjustments: 
+  On mobile, stack sidebar and content vertically.
+*/
+@media (max-width: 768px) {
+  #root {
+    flex-direction: column;
+  }
 }
 
 h1 {

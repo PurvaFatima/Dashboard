@@ -98,7 +98,7 @@ function App() {
         <AppSidebar className="w-64" />
 
         {/* Main content area should stretch */}
-        <SidebarInset className="flex flex-col flex-1 bg-gray-50 ml-0">
+  <SidebarInset className="flex flex-col flex-1 bg-gray-50">
           <MainContent>
             <Header
               title="Dashboard Overview"
@@ -128,29 +128,89 @@ function App() {
             </section>
 
             {/* Charts Grid */}
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
-              {/* Example chart card */}
-              <Card title="Revenue Overview" className="flex flex-col">
-                {barChartLoading ? (
-                  <div className="flex justify-center items-center h-80">
-                    <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-blue-500"></div>
-                  </div>
-                ) : barChartError ? (
-                  <div className="flex justify-center items-center h-80">
-                    <p className="text-red-500">Error loading chart data: {barChartError}</p>
-                  </div>
-                ) : (
-                  <Chart
-                    type="bar"
-                    data={barChartData || []}
-                    dataKeyX="name"
-                    dataKeyY="value"
-                    height={300}
-                  />
-                )}
-              </Card>
-
-              {/* Other chart cards... */}
+            <div className="flex flex-col gap-6 mb-6">
+              {/* First row: Bar and Line charts */}
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                <Card title="Revenue Overview" className="flex flex-col">
+                  {barChartLoading ? (
+                    <div className="flex justify-center items-center h-80">
+                      <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-blue-500"></div>
+                    </div>
+                  ) : barChartError ? (
+                    <div className="flex justify-center items-center h-80">
+                      <p className="text-red-500">Error loading chart data: {barChartError}</p>
+                    </div>
+                  ) : (
+                    <Chart
+                      type="bar"
+                      data={barChartData || []}
+                      dataKeyX="name"
+                      dataKeyY="value"
+                      height={300}
+                    />
+                  )}
+                </Card>
+                <Card title="Sales Trend" className="flex flex-col">
+                  {lineChartLoading ? (
+                    <div className="flex justify-center items-center h-80">
+                      <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-blue-500"></div>
+                    </div>
+                  ) : lineChartError ? (
+                    <div className="flex justify-center items-center h-80">
+                      <p className="text-red-500">Error loading chart data: {lineChartError}</p>
+                    </div>
+                  ) : (
+                    <Chart
+                      type="line"
+                      data={lineChartData || []}
+                      dataKeyX="name"
+                      dataKeyY="value"
+                      height={300}
+                    />
+                  )}
+                </Card>
+              </div>
+              {/* Second row: Pie and Scatter charts */}
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                <Card title="Market Share" className="flex flex-col">
+                  {pieChartLoading ? (
+                    <div className="flex justify-center items-center h-80">
+                      <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-blue-500"></div>
+                    </div>
+                  ) : pieChartError ? (
+                    <div className="flex justify-center items-center h-80">
+                      <p className="text-red-500">Error loading chart data: {pieChartError}</p>
+                    </div>
+                  ) : (
+                    <Chart
+                      type="pie"
+                      data={pieChartData || []}
+                      dataKeyX="name"
+                      dataKeyY="value"
+                      height={300}
+                    />
+                  )}
+                </Card>
+                <Card title="Performance Distribution" className="flex flex-col">
+                  {scatterChartLoading ? (
+                    <div className="flex justify-center items-center h-80">
+                      <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-blue-500"></div>
+                    </div>
+                  ) : scatterChartError ? (
+                    <div className="flex justify-center items-center h-80">
+                      <p className="text-red-500">Error loading chart data: {scatterChartError}</p>
+                    </div>
+                  ) : (
+                    <Chart
+                      type="scatter"
+                      data={scatterChartData || []}
+                      dataKeyX="x"
+                      dataKeyY="y"
+                      height={300}
+                    />
+                  )}
+                </Card>
+              </div>
             </div>
 
             {/* Sales Chart */}

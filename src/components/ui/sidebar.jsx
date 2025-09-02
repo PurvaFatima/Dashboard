@@ -95,6 +95,11 @@ function SidebarProvider({
   return (
     <SidebarContext.Provider value={contextValue}>
       <TooltipProvider delayDuration={0}>
+        {/* 
+          Use a flex container for layout.
+          This ensures sidebar and main content are aligned horizontally.
+          On mobile, sidebar overlays via Sheet.
+        */}
         <div
           data-slot="sidebar-wrapper"
           style={{
@@ -103,7 +108,8 @@ function SidebarProvider({
             ...style
           }}
           className={cn(
-            "group/sidebar-wrapper has-data-[variant=inset]:bg-sidebar flex min-h-svh w-full",
+            // Use flex-row for horizontal layout, min-h-screen for full height
+            "flex flex-row min-h-screen w-full group/sidebar-wrapper has-data-[variant=inset]:bg-sidebar",
             className
           )}
           {...props}
@@ -125,21 +131,25 @@ function Sidebar({
 }) {
   const { isMobile, state, openMobile, setOpenMobile } = useSidebar()
 
+  // If collapsible is "none", render sidebar as a static flex column
   if (collapsible === "none") {
     return (
-      <div
+      <aside
         data-slot="sidebar"
         className={cn(
-          "bg-sidebar text-sidebar-foreground flex h-full w-(--sidebar-width) flex-col",
+          // Sidebar is a flex column, fixed width, does not push content
+          "bg-sidebar text-sidebar-foreground flex flex-col w-[var(--sidebar-width)] h-screen md:h-auto md:sticky md:top-0",
+          "shrink-0", // Prevent sidebar from shrinking
           className
         )}
         {...props}
       >
         {children}
-      </div>
+      </aside>
     );
   }
 
+  // On mobile, sidebar overlays content using Sheet
   if (isMobile) {
     return (
       <Sheet open={openMobile} onOpenChange={setOpenMobile} {...props}>
@@ -147,7 +157,7 @@ function Sidebar({
           data-sidebar="sidebar"
           data-slot="sidebar"
           data-mobile="true"
-          className="bg-sidebar text-sidebar-foreground w-(--sidebar-width) p-0 [&>button]:hidden"
+          className="bg-sidebar text-sidebar-foreground w-[var(--sidebar-width)] p-0 [&>button]:hidden"
           style={{ "--sidebar-width": SIDEBAR_WIDTH_MOBILE }}
           side={side}
         >
@@ -161,49 +171,30 @@ function Sidebar({
     );
   }
 
+  // On desktop/tablet, sidebar is sticky/fixed and does not push content
   return (
-    <div
-      className="group peer text-sidebar-foreground hidden md:block"
+    <aside
+      className={cn(
+        // Sidebar is sticky on desktop, fixed width, flex column
+        "hidden md:flex flex-col w-[var(--sidebar-width)] h-screen md:h-auto md:sticky md:top-0 bg-sidebar text-sidebar-foreground shrink-0 z-10",
+        // Sidebar state/variant/collapsible data attributes
+        "group peer",
+        className
+      )}
       data-state={state}
       data-collapsible={state === "collapsed" ? collapsible : ""}
       data-variant={variant}
       data-side={side}
       data-slot="sidebar"
+      {...props}
     >
       <div
-        data-slot="sidebar-gap"
-        className={cn(
-          "relative w-(--sidebar-width) bg-transparent transition-[width] duration-200 ease-linear",
-          "group-data-[collapsible=offcanvas]:w-0",
-          "group-data-[side=right]:rotate-180",
-          variant === "floating" || variant === "inset"
-            ? "group-data-[collapsible=icon]:w-[calc(var(--sidebar-width-icon)+(--spacing(4)))]"
-            : "group-data-[collapsible=icon]:w-(--sidebar-width-icon)"
-        )}
-      />
-      <div
-        data-slot="sidebar-container"
-        className={cn(
-          "fixed inset-y-0 z-10 hidden h-svh w-(--sidebar-width) transition-[left,right,width] duration-200 ease-linear md:flex",
-          side === "left"
-            ? "left-0 group-data-[collapsible=offcanvas]:left-[calc(var(--sidebar-width)*-1)]"
-            : "right-0 group-data-[collapsible=offcanvas]:right-[calc(var(--sidebar-width)*-1)]",
-          variant === "floating" || variant === "inset"
-            ? "p-2 group-data-[collapsible=icon]:w-[calc(var(--sidebar-width-icon)+(--spacing(4))+2px)]"
-            : "group-data-[collapsible=icon]:w-(--sidebar-width-icon) group-data-[side=left]:border-r group-data-[side=right]:border-l",
-          className
-        )}
-        {...props}
+        data-slot="sidebar-inner"
+        className="bg-sidebar group-data-[variant=floating]:border-sidebar-border flex h-full w-full flex-col group-data-[variant=floating]:rounded-lg group-data-[variant=floating]:border group-data-[variant=floating]:shadow-sm"
       >
-        <div
-          data-sidebar="sidebar"
-          data-slot="sidebar-inner"
-          className="bg-sidebar group-data-[variant=floating]:border-sidebar-border flex h-full w-full flex-col group-data-[variant=floating]:rounded-lg group-data-[variant=floating]:border group-data-[variant=floating]:shadow-sm"
-        >
-          {children}
-        </div>
+        {children}
       </div>
-    </div>
+    </aside>
   );
 }
 
@@ -593,12 +584,13 @@ export {
   SidebarMenuSkeleton,
   SidebarMenuSub,
   SidebarMenuSubButton,
-  SidebarMenuSubItem,
-  SidebarProvider,
-  SidebarRail,
-  SidebarSeparator,
-  SidebarTrigger,
+SidebarMenuSubItem,
+SidebarProvider,
+SidebarRail,
+SidebarSeparator,
+SidebarTrigger,
+
+
 }
 
-// ✅ Also export default so default imports won’t crash:
-export default Sidebar;
+export default Sidebar; // ✅ Also export default so default imports won’t crash:
