@@ -1,30 +1,9 @@
-// app-sidebar.jsx (shadcn component)
-import { Calendar, Home, Inbox, Search, Settings } from "lucide-react"
+// app-sidebar.jsx
 
-import {
-  Sidebar,
-  SidebarContent,
-  SidebarGroup,
-  SidebarGroupContent,
-  SidebarGroupLabel,
-  SidebarMenu,
-  SidebarMenuButton,
-  SidebarMenuItem,
-} from "@/components/ui/sidebar"
-
-// Menu items.
-const items = [
-  { title: "Home", url: "#", icon: Home },
-  { title: "Inbox", url: "#", icon: Inbox },
-  { title: "Calendar", url: "#", icon: Calendar },
-  { title: "Search", url: "#", icon: Search },
-  { title: "Settings", url: "#", icon: Settings },
-]
-
-export function AppSidebar() {
+function AppSidebar() {
   return (
     <aside
-      className={`bg-white border-r-2 border-gray-200 shadow-lg min-h-screen flex flex-col p-6`}
+      className="bg-white border-r-2 border-gray-200 shadow-lg min-h-screen flex flex-col p-6"
       style={{ minWidth: "260px" }}
     >
       {/* Sidebar Heading */}
@@ -35,7 +14,7 @@ export function AppSidebar() {
         <div className="h-1 w-8 bg-blue-500 rounded mb-2"></div>
       </div>
 
-      {/* Sidebar Navigation (example) */}
+      {/* Sidebar Navigation */}
       <nav className="flex flex-col gap-4">
         <a
           href="#overview"
@@ -71,5 +50,4 @@ export function AppSidebar() {
   )
 }
 
-// ✅ Provide default export too (so either import style works)
 export default AppSidebar;
