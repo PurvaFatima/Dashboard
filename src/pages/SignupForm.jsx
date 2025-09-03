@@ -17,15 +17,15 @@ import { zodResolver } from "@hookform/resolvers/zod"
 import { signupSchema } from "../validationSchemas"
 
 // Firebase authentication
-import { createUserWithEmailAndPassword } from "firebase/auth"
-import { auth } from "@/firebase"
+import { createUserWithEmailAndPassword, signInWithPopup } from "firebase/auth"
+import { auth, googleProvider } from "@/firebase"
 
 // Router
 import { useNavigate, Link } from "react-router-dom"
 
 /**
  * SignupForm Component
- * Handles new user registration with email/password.
+ * Handles new user registration with email/password or Google account.
  * Includes validation using React Hook Form + Zod.
  */
 const SignupForm = ({ className, ...props }) => {
@@ -41,13 +41,26 @@ const SignupForm = ({ className, ...props }) => {
   })
 
   /**
-   * Handle user signup
+   * Handle signup with email/password
    */
   const onSubmit = async (data) => {
     console.log("Signup Data:", data)
     try {
       await createUserWithEmailAndPassword(auth, data.email, data.password)
       alert("Account created successfully!")
+      navigate("/dashboard") // Redirect after signup
+    } catch (err) {
+      alert(err.message)
+    }
+  }
+
+  /**
+   * Handle Google Sign Up
+   */
+  const handleGoogleSignup = async () => {
+    try {
+      await signInWithPopup(auth, googleProvider)
+      alert("Google sign-up successful!")
       navigate("/dashboard") // Redirect after signup
     } catch (err) {
       alert(err.message)
@@ -96,11 +109,7 @@ const SignupForm = ({ className, ...props }) => {
             {/* Password Field */}
             <div className="grid gap-3">
               <Label htmlFor="password">Password</Label>
-              <Input
-                type="password"
-                {...register("password")}
-                required
-              />
+              <Input type="password" {...register("password")} required />
               {errors.password && (
                 <p className="text-red-500 text-sm">
                   {errors.password.message}
@@ -111,11 +120,7 @@ const SignupForm = ({ className, ...props }) => {
             {/* Confirm Password Field */}
             <div className="grid gap-3">
               <Label htmlFor="confirmPassword">Confirm Password</Label>
-              <Input
-                type="password"
-                {...register("confirmPassword")}
-                required
-              />
+              <Input type="password" {...register("confirmPassword")} required />
               {errors.confirmPassword && (
                 <p className="text-red-500 text-sm">
                   {errors.confirmPassword.message}
@@ -123,10 +128,20 @@ const SignupForm = ({ className, ...props }) => {
               )}
             </div>
 
-            {/* Action Button */}
-            <Button type="submit" className="w-full">
-              Sign Up
-            </Button>
+            {/* Action Buttons */}
+            <div className="flex flex-col gap-3">
+              <Button type="submit" className="w-full">
+                Sign Up
+              </Button>
+              <Button
+                type="button"
+                variant="outline"
+                onClick={handleGoogleSignup}
+                className="w-full"
+              >
+                Sign Up with Google
+              </Button>
+            </div>
 
             {/* Login Link */}
             <div className="mt-4 text-center text-sm">
