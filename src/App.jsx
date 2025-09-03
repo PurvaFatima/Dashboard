@@ -4,6 +4,8 @@ import MainContent from "./layout/MainContent";
 import Chart from "./layout/Chart";
 import Footer from "./layout/Footer";
 import SalesChart from "./layout/SalesChart";
+import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar"
+import { AppSidebar } from "@/components/app-sidebar"
 
 import { useMetricsData } from "./hooks/useMetricsData";
 import {
@@ -32,7 +34,10 @@ function App() {
      
         <div className="flex flex-col min-h-screen w-full">
           
-            <MainContent>
+            <SidebarProvider>
+              <AppSidebar />
+              <MainContent>
+                <SidebarTrigger />
               <Header
                 title="Dashboard Overview"
                 subtitle="Loading dashboard data..."
@@ -44,9 +49,9 @@ function App() {
                   <p className="text-gray-600">Loading dashboard data...</p>
                 </div>
               </div>
-            </MainContent>
-            <Footer />
-
+            </MainContent> 
+            </SidebarProvider>
+          <Footer />
         </div>
     );
   }
@@ -56,7 +61,10 @@ function App() {
     return (
         <div className="flex flex-col min-h-screen w-full">
 
-            <MainContent>
+            <SidebarProvider>
+              <AppSidebar />
+              <MainContent>
+                <SidebarTrigger />
               <Header
                 title="Dashboard Overview"
                 subtitle="Error loading dashboard data"
@@ -76,6 +84,7 @@ function App() {
                 </div>
               </div>
             </MainContent>
+            </SidebarProvider>
             <Footer />
         </div>
     );
@@ -84,9 +93,12 @@ function App() {
   // Success state 
   return (
       <div className="flex flex-col min-h-screen w-full">
-
+        <SidebarProvider>
+          <AppSidebar />
+          
         {/* Main content area should stretch */}
           <MainContent>
+          <SidebarTrigger />    
             <Header
               title="Dashboard Overview"
               subtitle="Welcome to your dashboard"
@@ -205,6 +217,7 @@ function App() {
               <SalesChart />
             </div>
           </MainContent>
+          </SidebarProvider>
           <Footer />
       </div>
   )
