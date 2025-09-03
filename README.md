@@ -2,7 +2,63 @@
 
 A modern dashboard application built with React, featuring a customizable sidebar UI component.
 
+# Finance Dashboard
+
+A modern, responsive finance dashboard built with React, Vite, and Tailwind CSS. This dashboard provides authentication, navigation, and data visualization for financial metrics, sales, and more.
+
 ## Features
+
+- **Authentication**: Login with email/password or Google. Protected routes for dashboard access.
+- **Navigation**: React Router-based navigation for Dashboard, Blog, Settings, and Login pages.
+- **Dashboard**: Visualizes metrics and charts (bar, line, pie, scatter) using custom hooks and chart components.
+- **Responsive Design**: Mobile-friendly layout using Tailwind CSS.
+- **Data Fetching**: Custom hooks for metrics and chart data.
+- **Blog**: Example blog page for finance articles.
+- **Settings**: User settings page.
+
+## Technologies Used
+
+- React 19
+- Vite 7.1.3
+- Tailwind CSS v4
+- React Router DOM
+- Firebase (for authentication)
+- Zod & React Hook Form (form validation)
+- Lucide React (icons)
+- ShadCN (built in components)
+
+## Getting Started
+
+### Prerequisites
+- Node.js (v18 or newer recommended)
+- npm or yarn
+
+### Installation
+1. Clone the repository:
+  ```sh
+  git clone https://github.com/PurvaFatima/Dashboard.git
+  cd Dashboard
+  ```
+2. Install dependencies:
+  ```sh
+  npm install
+  # or
+  yarn install
+  ```
+3. Set up Firebase:
+  - Create a Firebase project and enable Email/Password and Google authentication.
+  - Add your Firebase config to `src/firebase.js`.
+
+### Running the App
+```sh
+npm run dev
+# or
+## Features
+```
+The app will be available at `http://localhost:5173` (default Vite port).
+
+## Project Structure
+```
 
 - Responsive sidebar with collapsible and offcanvas modes
 - Keyboard shortcut support for toggling sidebar (`Ctrl+B` / `Cmd+B`)
@@ -33,6 +89,27 @@ The sidebar UI is implemented in [`src/components/ui/sidebar.jsx`](src/component
 ```bash
 npm install
 # or
+
+## Usage
+- **Login**: Access `/login` to sign in. Successful login redirects to `/` (home).
+- **Dashboard**: View metrics and charts at `/dashboard`.
+- **Blog**: Read finance articles at `/blog`.
+- **Settings**: Manage user settings at `/settings`.
+
+## Customization
+- Update chart data and metrics in the hooks/services as needed.
+- Add new pages or components in the `src/pages` and `src/components` folders.
+- Style using Tailwind CSS classes in your components and `index.css`.
+
+## Contributing
+Pull requests are welcome! For major changes, please open an issue first to discuss what you would like to change.
+
+## License
+MIT
+
+---
+
+**Author:** PurvaFatima
 yarn install
 ```
 
