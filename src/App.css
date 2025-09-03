@@ -4,12 +4,6 @@
   min-height: 100vh;
 }
 
-.sidebar {
-  width: 256px;
-  background-color: #1f2937;
-  color: white;
-  transition: all 0.3s ease;
-}
 
 .main-content {
   flex: 1;
@@ -18,13 +12,7 @@
 }
 
 @media (max-width: 640px) {
-  .sidebar {
-    width: 64px;
-  }
-  
-  .sidebar .nav-text {
-    display: none;
-  }
+
   
   .main-content {
     margin-left: 64px;

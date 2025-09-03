@@ -1,12 +1,15 @@
-h1.sidebar-heading {
-  font-size: 2rem;
-  line-height: 1.25;
-  font-weight: 600;
-}
 @import "tailwindcss";
 @import "tw-animate-css";
 
 @custom-variant dark (&:is(.dark *));
+
+/* shadcn base layer */
+@layer base {
+  :root {
+    --radius: 0.5rem;
+  }
+}
+
 
 :root {
   font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
@@ -207,3 +210,4 @@ button:focus-visible {
     @apply bg-background text-foreground;
   }
 }
+

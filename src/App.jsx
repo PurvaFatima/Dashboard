@@ -1,6 +1,3 @@
-import AppSidebar from "@/components/app-sidebar"
-import { SidebarProvider, SidebarInset } from "@/components/ui/sidebar"
-
 import Header from "./layout/Header";
 import Card from "./layout/Card";
 import MainContent from "./layout/MainContent";
@@ -32,10 +29,9 @@ function App() {
   // Loading state
   if (metricsLoading) {
     return (
-      <SidebarProvider>
-        <div className="flex min-h-screen w-full">
-          <AppSidebar />
-          <SidebarInset className="flex flex-col">
+     
+        <div className="flex flex-col min-h-screen w-full">
+          
             <MainContent>
               <Header
                 title="Dashboard Overview"
@@ -50,19 +46,16 @@ function App() {
               </div>
             </MainContent>
             <Footer />
-          </SidebarInset>
+
         </div>
-      </SidebarProvider>
     );
   }
 
   // Error state
   if (metricsError) {
     return (
-      <SidebarProvider>
-        <div className="flex min-h-screen w-full">
-          <AppSidebar />
-          <SidebarInset className="flex flex-col">
+        <div className="flex flex-col min-h-screen w-full">
+
             <MainContent>
               <Header
                 title="Dashboard Overview"
@@ -84,21 +77,15 @@ function App() {
               </div>
             </MainContent>
             <Footer />
-          </SidebarInset>
         </div>
-      </SidebarProvider>
     );
   }
 
   // Success state 
   return (
-    <SidebarProvider>
-      <div className="flex min-h-screen w-full">
-        {/* Fixed-width sidebar */}
-        <AppSidebar className="w-64" />
+      <div className="flex flex-col min-h-screen w-full">
 
         {/* Main content area should stretch */}
-  <SidebarInset className="flex flex-col flex-1 bg-gray-50">
           <MainContent>
             <Header
               title="Dashboard Overview"
@@ -218,11 +205,8 @@ function App() {
               <SalesChart />
             </div>
           </MainContent>
-
           <Footer />
-        </SidebarInset>
       </div>
-    </SidebarProvider>
   )
 }
 
