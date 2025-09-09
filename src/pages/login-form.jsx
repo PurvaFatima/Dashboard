@@ -13,6 +13,14 @@ import {
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 
+
+import { AlertCircleIcon, CheckCircle2Icon, PopcornIcon } from "lucide-react"
+import {
+  Alert,
+  AlertDescription,
+  AlertTitle,
+} from "@/components/ui/alert"
+
 // Import form handling and validation
 import { useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
@@ -34,19 +42,19 @@ import { useNavigate, Link } from "react-router-dom"
  * Includes validation using React Hook Form + Zod.
  */
 
-const LoginForm = ({ className, ...props }) => {
+const LoginForm = ({ className, ...props }) => { 
+  
   // Local state for form fields and error handling
-  const [email, setEmail] = useState("")
-  const [password, setPassword] = useState("")
   const [error, setError] = useState("")
 
   // React Hook Form setup with Zod schema
   const {
     register,
     handleSubmit,
-    formState: { errors },
+    formState: { errors, isValid },
   } = useForm({
     resolver: zodResolver(loginSchema),
+    mode: "onChange",
   })
 
   // Router navigation hook
@@ -59,7 +67,6 @@ const LoginForm = ({ className, ...props }) => {
     console.log("Login Data:", data)
     try {
       await signInWithEmailAndPassword(auth, data.email, data.password)
-      alert("Logged in successfully!")
       navigate("/dashboard") // Redirect to dashboard after successful login
     } catch (err) {
       setError(err.message)
@@ -72,7 +79,6 @@ const LoginForm = ({ className, ...props }) => {
   const handleGoogleLogin = async () => {
     try {
       await signInWithPopup(auth, googleProvider)
-      alert("Google login successful!")
       navigate("/dashboard") // Redirect to dashboard after successful login
     } catch (err) {
       setError(err.message)
@@ -98,6 +104,11 @@ const LoginForm = ({ className, ...props }) => {
           </CardDescription>
         </CardHeader>
 
+        {error && (<Alert variant="destructive">
+        <CheckCircle2Icon />
+        <AlertTitle>{error}</AlertTitle>
+      </Alert>)}
+
         {/* Content */}
         <CardContent>
           <form
@@ -111,8 +122,6 @@ const LoginForm = ({ className, ...props }) => {
                 <Input
                   type="email"
                   {...register("email")}
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
                   placeholder="m@example.com"
                   required
                 />
@@ -131,8 +140,6 @@ const LoginForm = ({ className, ...props }) => {
                 <Input
                   type="password"
                   {...register("password")}
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
                   required
                 />
                 {errors.password && (
@@ -155,7 +162,7 @@ const LoginForm = ({ className, ...props }) => {
 
               {/* Action Buttons */}
               <div className="flex flex-col gap-3">
-                <Button type="submit" className="w-full">
+                <Button type="submit" className="w-full" disabled={!isValid}>
                   Login
                 </Button>
                 <Button
@@ -163,6 +170,7 @@ const LoginForm = ({ className, ...props }) => {
                   variant="outline"
                   onClick={handleGoogleLogin}
                   className="w-full"
+                  
                 >
                   Login with Google
                 </Button>
@@ -177,6 +185,8 @@ const LoginForm = ({ className, ...props }) => {
               </Link>
             </div>
           </form>
+
+          
         </CardContent>
       </Card>
     </div>

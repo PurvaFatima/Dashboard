@@ -18,43 +18,12 @@ import {
   useScatterChartData,
 } from "../hooks/useChartData";
 
-// Firebase authentication
-import { auth } from "../firebase";
-import { signOut } from "firebase/auth";
-
-// Router navigation
-import { useNavigate } from "react-router-dom";
-
 export default function Dashboard() {
-  const navigate = useNavigate();
 
-  /**
-   * Handles user logout via Firebase
-   * Redirects back to the login page after successful sign-out
-   */
-  const handleLogout = async () => {
-    try {
-      await signOut(auth);
-      navigate("/login"); // redirect after logout
-    } catch (error) {
-      console.error("Error logging out:", error);
-    }
-  };
+
 
   // Header actions shown at the top right
   const headerActions = [
-    {
-      label: "Logout",
-      variant: "danger",
-      onClick: handleLogout,
-      className:
-        "bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-md font-medium",
-    },
-    {
-      label: "New Item",
-      variant: "primary",
-      onClick: () => console.log("New item clicked"),
-    },
     {
       label: "Refresh",
       variant: "secondary",
@@ -89,11 +58,7 @@ export default function Dashboard() {
     error: scatterChartError,
   } = useScatterChartData();
 
-  /**
-   * ---------------------------
-   * Render States
-   * ---------------------------
-   */
+  // Render States
 
   // Loading State
   if (metricsLoading) {

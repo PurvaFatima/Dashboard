@@ -1,6 +1,6 @@
 // app-sidebar.jsx (shadcn component)
-import { Home, LogIn, Settings, BookA } from "lucide-react";
-import { Link } from "react-router-dom";
+import { Home, Settings, BookA, LogOut } from "lucide-react";
+import { Link, useNavigate } from "react-router-dom";
 import {
   Sidebar,
   SidebarContent,
@@ -12,15 +12,33 @@ import {
   SidebarMenuItem,
 } from "@/components/ui/sidebar";
 
-// Menu items.
-const items = [
-  { title: "Dashboard", url: "/dashboard", icon: Home },
-  { title: "Blog", url: "/blog", icon: BookA },
-  { title: "Settings", url: "/settings", icon: Settings },
-  { title: "Login", url: "/login", icon: LogIn },
-];
+// Firebase
+import { signOut } from "firebase/auth";
+import { auth } from "../firebase";
 
 export function AppSidebar() {
+  const navigate = useNavigate();
+
+  /**
+   * Handles user logout via Firebase
+   * Redirects back to the login page after successful sign-out
+   */
+  const handleLogout = async () => {
+    try {
+      await signOut(auth);
+      navigate("/login"); // redirect after logout
+    } catch (error) {
+      console.error("Error logging out:", error);
+    }
+  };
+
+  // Menu items
+  const items = [
+    { title: "Dashboard", url: "/dashboard", icon: Home },
+    { title: "Blog", url: "/blog", icon: BookA },
+    { title: "Settings", url: "/settings", icon: Settings },
+  ];
+
   return (
     <Sidebar collapsible="icon">
       <SidebarContent>
@@ -38,6 +56,14 @@ export function AppSidebar() {
                   </SidebarMenuButton>
                 </SidebarMenuItem>
               ))}
+
+              {/* Logout Button */}
+              <SidebarMenuItem>
+                <SidebarMenuButton onClick={handleLogout}>
+                  <LogOut className="w-5 h-5" />
+                  <span>Logout</span>
+                </SidebarMenuButton>
+              </SidebarMenuItem>
             </SidebarMenu>
           </SidebarGroupContent>
         </SidebarGroup>
@@ -46,5 +72,5 @@ export function AppSidebar() {
   );
 }
 
-// ✅ Provide default export too (so either import style works)
+// ✅ Provide default export too
 export default AppSidebar;

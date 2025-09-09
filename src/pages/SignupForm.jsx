@@ -47,8 +47,8 @@ const SignupForm = ({ className, ...props }) => {
     console.log("Signup Data:", data)
     try {
       await createUserWithEmailAndPassword(auth, data.email, data.password)
-      alert("Account created successfully!")
-      navigate("/dashboard") // Redirect after signup
+      alert("Please sign in!")
+      navigate("/login") // Redirect after signup
     } catch (err) {
       alert(err.message)
     }
@@ -60,8 +60,8 @@ const SignupForm = ({ className, ...props }) => {
   const handleGoogleSignup = async () => {
     try {
       await signInWithPopup(auth, googleProvider)
-      alert("Google sign-up successful!")
-      navigate("/dashboard") // Redirect after signup
+      alert("Please sign in!")
+      navigate("/login") // Redirect after signup
     } catch (err) {
       alert(err.message)
     }
