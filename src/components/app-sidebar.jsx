@@ -22,7 +22,7 @@ export function AppSidebar() {
   /**
    * Handles user logout via Firebase
    * Redirects back to the login page after successful sign-out
-   */
+  
   const handleLogout = async () => {
     try {
       await signOut(auth);
@@ -31,7 +31,18 @@ export function AppSidebar() {
       console.error("Error logging out:", error);
     }
   };
+ */
 
+  const handleLogout = async () => {
+  try {
+    await signOut(auth); // wait until Firebase actually signs out
+    console.log("✅ User signed out successfully");
+    navigate("/login"); // only redirect after success
+  } catch (error) {
+    console.error("❌ Error logging out:", error.message);
+  }
+};
+  
   // Menu items
   const items = [
     { title: "Dashboard", url: "/dashboard", icon: Home },
