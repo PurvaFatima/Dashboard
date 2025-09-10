@@ -25,8 +25,8 @@ export default function Dashboard() {
   // Header actions shown at the top right
   const headerActions = [
     {
-      label: "Refresh",
-      variant: "secondary",
+       label: "Refresh",
+      variant: "Primary",
       onClick: () => window.location.reload(),
     },
   ];

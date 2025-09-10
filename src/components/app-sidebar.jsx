@@ -22,15 +22,6 @@ export function AppSidebar() {
   /**
    * Handles user logout via Firebase
    * Redirects back to the login page after successful sign-out
-  
-  const handleLogout = async () => {
-    try {
-      await signOut(auth);
-      navigate("/login"); // redirect after logout
-    } catch (error) {
-      console.error("Error logging out:", error);
-    }
-  };
  */
 
   const handleLogout = async () => {
@@ -70,7 +61,8 @@ export function AppSidebar() {
 
               {/* Logout Button */}
               <SidebarMenuItem>
-                <SidebarMenuButton onClick={handleLogout}>
+                <SidebarMenuButton onClick={handleLogout}
+                 className="flex items-center gap-2 cursor-pointer text-white hover:text-red-400">
                   <LogOut className="w-5 h-5" />
                   <span>Logout</span>
                 </SidebarMenuButton>
