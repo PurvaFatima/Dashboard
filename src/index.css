@@ -75,6 +75,11 @@ body {
   @apply bg-gray-50 text-gray-900;
 }
 
+.recharts-surface:focus {
+  outline: none !important;
+}
+
+
 #root {
   flex: 1;
   display: flex;
@@ -104,7 +109,8 @@ button {
   font-size: 1em;
   font-weight: 500;
   font-family: inherit;
-  background-color: #1a1a1a;
+  background-color: #c3a9eb;
+  color: #000000;
   cursor: pointer;
   transition: border-color 0.25s;
 }

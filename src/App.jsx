@@ -1,4 +1,4 @@
-import { Router, Routes, Route } from "react-router-dom";
+import {Routes, Route } from "react-router-dom";
 import LoginPage from "./pages/login-form";
 import SignupPage from "./pages/SignupForm";
 import Blog from "./pages/Blog";
@@ -11,6 +11,7 @@ function App() {
         {/* Public Routes */}
         <Route path="/" element={<LoginPage />} />
         <Route path="/signup" element={<SignupPage />} />
+        <Route path="/login" element={<LoginPage />} />
 
         {/* Protected Route */}
         <Route

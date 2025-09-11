@@ -93,7 +93,7 @@ const LoginForm = ({ className, ...props }) => {
       )}
       {...props}
     >
-      <Card className="p-6 shadow-2xl rounded-2xl border border-gray-200 bg-white/90 backdrop-blur">
+      <Card className="w-full sm:w-1/2 lg:w-1/3 p-6 shadow-2xl rounded-2xl border border-gray-200 bg-white/90 backdrop-blur">
         {/* Header */}
         <CardHeader className="space-y-2 text-center">
           <CardTitle className="text-2xl font-bold text-gray-900">
@@ -169,8 +169,7 @@ const LoginForm = ({ className, ...props }) => {
                   type="button"
                   variant="outline"
                   onClick={handleGoogleLogin}
-                  className="w-full"
-                  
+                  className="w-full text-white"
                 >
                   Login with Google
                 </Button>
