@@ -6,12 +6,12 @@ import { SidebarProvider } from "@/components/ui/sidebar";
 export default function DashboardLayout() {
   return (
     <SidebarProvider>
-      <div className="flex h-screen overflow-hidden">
+      <div className="flex h-screen w-screen overflow-x-hidden">
         {/* Single sidebar instance */}
         <AppSidebar />
 
         {/* Main content  */}
-        <main className="flex-1 py-6 px-2 overflow-y-auto w-full">
+        <main className="py-6 px-2 overflow-y-auto overflow-hidden w-full">
           <Outlet /> {/* Renders Dashboard.jsx content here */}
         </main>
       </div>

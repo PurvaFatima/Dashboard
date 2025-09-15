@@ -85,6 +85,7 @@ body {
   display: flex;
   flex-direction: row; /* Sidebar and content side by side */
   min-height: 100vh;
+  overflow-x: hidden;
 }
 
 /* 
