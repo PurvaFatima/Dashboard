@@ -83,7 +83,7 @@ export function AppSidebar() {
       <SidebarFooter className="flex flex-col items-center sm:items-start gap-2 p-4 border-t">
         
         {/* Avatar & Email */}
-        <div className="flex items-center gap-2">
+        <div className="flex flex-col items-center gap-2">
           <div className="h-10 w-10 rounded-full bg-purple-600 text-white flex items-center justify-center text-lg font-bold">
             {email ? email.charAt(0).toUpperCase() : "U"}
           </div>

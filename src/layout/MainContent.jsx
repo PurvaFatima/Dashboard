@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 const MainContent = ({ children, className = '', ...props }) => {
   return (
     <main 
-      className={`flex-1 bg-gray-50 p-4 sm:p-6 transition-all duration-300 ${className}`}
+      className={`flex-1 bg-gray-50 py-4 sm:py-6 px-0 transition-all duration-300 ${className}`}
       {...props}
     >
       {children}
