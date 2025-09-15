@@ -41,7 +41,7 @@ export function AppSidebar() {
 
   const items = [
     { title: "Dashboard", url: "/dashboard", icon: Home },
-    { title: "Blog", url: "/dashboard/blog", icon: BookA },
+    { title: "Expenditure", url: "/dashboard/expenditure", icon: BookA },
     { title: "Settings", url: "/dashboard/settings", icon: Settings },
   ]
 
