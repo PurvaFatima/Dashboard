@@ -13,11 +13,9 @@ import {
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 
-
-import { AlertCircleIcon, CheckCircle2Icon, PopcornIcon } from "lucide-react"
+import { CheckCircle2Icon } from "lucide-react"
 import {
   Alert,
-  AlertDescription,
   AlertTitle,
 } from "@/components/ui/alert"
 
@@ -36,18 +34,9 @@ import { signInWithEmailAndPassword, signInWithPopup } from "firebase/auth"
 // Router
 import { useNavigate, Link } from "react-router-dom"
 
-/**
- * LoginForm Component
- * Handles user login with Email/Password or Google Authentication.
- * Includes validation using React Hook Form + Zod.
- */
-
 const LoginForm = ({ className, ...props }) => { 
-  
-  // Local state for form fields and error handling
   const [error, setError] = useState("")
 
-  // React Hook Form setup with Zod schema
   const {
     register,
     handleSubmit,
@@ -57,29 +46,21 @@ const LoginForm = ({ className, ...props }) => {
     mode: "onChange",
   })
 
-  // Router navigation hook
   const navigate = useNavigate()
 
-  /**
-   * Handle login with email and password
-   */
   const onSubmit = async (data) => {
-    console.log("Login Data:", data)
     try {
       await signInWithEmailAndPassword(auth, data.email, data.password)
-      navigate("/dashboard") // Redirect to dashboard after successful login
+      navigate("/dashboard")
     } catch (err) {
       setError(err.message)
     }
   }
 
-  /**
-   * Handle login with Google provider
-   */
   const handleGoogleLogin = async () => {
     try {
       await signInWithPopup(auth, googleProvider)
-      navigate("/dashboard") // Redirect to dashboard after successful login
+      navigate("/dashboard")
     } catch (err) {
       setError(err.message)
     }
@@ -93,23 +74,28 @@ const LoginForm = ({ className, ...props }) => {
       )}
       {...props}
     >
-      <Card className="w-full sm:w-1/2 lg:w-1/3 p-6 shadow-2xl rounded-2xl border border-gray-200 bg-white/90 backdrop-blur">
+      {/* CHANGED: card now adapts to dark mode */}
+      <Card className="w-full sm:w-1/2 lg:w-1/3 p-6 shadow-2xl rounded-2xl border border-gray-200 
+        bg-white/90 backdrop-blur 
+        dark:bg-[#25314d]/90 dark:border-gray-700 dark:shadow-lg">
+        
         {/* Header */}
         <CardHeader className="space-y-2 text-center">
-          <CardTitle className="text-2xl font-bold text-gray-900">
+          <CardTitle className="text-2xl font-bold text-gray-900 dark:text-white">
             Login to your account
           </CardTitle>
-          <CardDescription className="text-gray-600">
+          <CardDescription className="text-gray-600 dark:text-gray-300">
             Enter your email below to login to your account
           </CardDescription>
         </CardHeader>
 
-        {error && (<Alert variant="destructive">
-        <CheckCircle2Icon />
-        <AlertTitle>{error}</AlertTitle>
-      </Alert>)}
+        {error && (
+          <Alert variant="destructive">
+            <CheckCircle2Icon />
+            <AlertTitle>{error}</AlertTitle>
+          </Alert>
+        )}
 
-        {/* Content */}
         <CardContent>
           <form
             onSubmit={handleSubmit(onSubmit)}
@@ -118,40 +104,42 @@ const LoginForm = ({ className, ...props }) => {
             <div className="flex flex-col gap-6">
               {/* Email Field */}
               <div className="grid gap-3">
-                <Label htmlFor="email">Email</Label>
+                <Label htmlFor="email" className="dark:text-gray-200">Email</Label>
+                {/* CHANGED: input styles for dark mode */}
                 <Input
                   type="email"
                   {...register("email")}
                   placeholder="m@example.com"
                   required
+                  className="dark:bg-[#1f2a44] dark:text-white dark:placeholder-gray-400 
+                    dark:border-gray-600 focus:dark:border-blue-400"
                 />
                 {errors.email && (
-                  <p className="text-red-500 text-sm">
-                    {errors.email.message}
-                  </p>
+                  <p className="text-red-500 text-sm">{errors.email.message}</p>
                 )}
               </div>
 
               {/* Password Field */}
               <div className="grid gap-3">
                 <div className="flex items-center">
-                  <Label htmlFor="password">Password</Label>
+                  <Label htmlFor="password" className="dark:text-gray-200">Password</Label>
                 </div>
                 <Input
                   type="password"
                   {...register("password")}
                   required
+                  className="dark:bg-[#1f2a44] dark:text-white dark:placeholder-gray-400 
+                    dark:border-gray-600 focus:dark:border-blue-400"
                 />
                 {errors.password && (
-                  <p className="text-red-500 text-sm">
-                    {errors.password.message}
-                  </p>
+                  <p className="text-red-500 text-sm">{errors.password.message}</p>
                 )}
 
-                {/* Forgot Password Link */}
+                {/* Forgot Password */}
                 <a
                   href="#"
-                  className="ml-auto inline-block text-sm underline-offset-4 hover:underline"
+                  className="ml-auto inline-block text-sm underline-offset-4 hover:underline
+                    text-gray-700 dark:text-gray-300"
                 >
                   Forgot your password?
                 </a>
@@ -160,16 +148,22 @@ const LoginForm = ({ className, ...props }) => {
               {/* Error Message */}
               {error && <p className="text-red-500 text-sm">{error}</p>}
 
-              {/* Action Buttons */}
+              {/* Buttons */}
               <div className="flex flex-col gap-3">
-                <Button type="submit" className="w-full" disabled={!isValid}>
+                <Button 
+                  type="submit" 
+                  className="w-full hover:shadow-md dark:hover:shadow-blue-900/50" 
+                  disabled={!isValid}
+                >
                   Login
                 </Button>
                 <Button
                   type="button"
                   variant="outline"
                   onClick={handleGoogleLogin}
-                  className="w-full text-white"
+                  className="w-full text-white 
+                    dark:bg-blue-600 dark:hover:bg-blue-700 dark:border-none 
+                    hover:shadow-md dark:hover:shadow-blue-900/50"
                 >
                   Login with Google
                 </Button>
@@ -177,19 +171,17 @@ const LoginForm = ({ className, ...props }) => {
             </div>
 
             {/* Sign Up Link */}
-            <div className="mt-4 text-center text-sm">
+            <div className="mt-4 text-center text-sm text-gray-700 dark:text-gray-300">
               Don’t have an account?{" "}
               <Link to="/signup" className="underline underline-offset-4">
                 Sign up
               </Link>
             </div>
           </form>
-
-          
         </CardContent>
       </Card>
     </div>
   )
 }
 
-export default LoginForm;
+export default LoginForm

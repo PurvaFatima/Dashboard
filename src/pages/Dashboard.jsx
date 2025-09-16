@@ -17,7 +17,6 @@ import {
 } from "../hooks/useChartData";
 
 export default function Dashboard() {
-  // Header actions shown at the top right
   const headerActions = [
     {
       label: "Refresh",
@@ -26,7 +25,6 @@ export default function Dashboard() {
     },
   ];
 
-  // Fetch dashboard data using custom hooks
   const {
     data: metricsData,
     loading: metricsLoading,
@@ -53,12 +51,11 @@ export default function Dashboard() {
     error: scatterChartError,
   } = useScatterChartData();
 
-  // Render States
-
   // Loading State
   if (metricsLoading) {
     return (
-      <MainContent className="w-full mx-0">
+      <MainContent className="w-full mx-0 dark:bg-gradient-to-br dark:from-[#4b6cb7] dark:to-[#182848] dark:text-white"> 
+        {/* CHANGED: dark mode global gradient + white text */}
         <SidebarTrigger />
         <Header
           title="Dashboard Overview"
@@ -68,7 +65,10 @@ export default function Dashboard() {
         <div className="flex justify-center items-center h-64">
           <div className="text-center">
             <div className="inline-block animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-blue-500 mb-4"></div>
-            <p className="text-gray-600">Loading dashboard data...</p>
+            <p className="text-gray-600 dark:text-gray-300">
+              {/* CHANGED: dark mode text */}
+              Loading dashboard data...
+            </p>
           </div>
         </div>
         <Footer />
@@ -79,7 +79,8 @@ export default function Dashboard() {
   // Error State
   if (metricsError) {
     return (
-      <MainContent className="w-full mx-0">
+      <MainContent className="w-full mx-0 dark:bg-gradient-to-br dark:from-[#4b6cb7] dark:to-[#182848] dark:text-white">
+        {/* CHANGED: dark mode global gradient + white text */}
         <SidebarTrigger />
         <Header
           title="Dashboard Overview"
@@ -89,10 +90,14 @@ export default function Dashboard() {
         <div className="flex justify-center items-center h-64">
           <div className="text-center">
             <div className="text-red-500 text-5xl mb-4">⚠️</div>
-            <h3 className="text-xl font-semibold text-gray-900 mb-2">
+            <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-2">
+              {/* CHANGED: dark mode text */}
               Error Loading Data
             </h3>
-            <p className="text-gray-600 mb-4">{metricsError}</p>
+            <p className="text-gray-600 dark:text-gray-300 mb-4">
+              {/* CHANGED: dark mode text */}
+              {metricsError}
+            </p>
             <button
               onClick={() => window.location.reload()}
               className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
@@ -108,22 +113,32 @@ export default function Dashboard() {
 
   // Success State
   return (
-    <MainContent className="w-full mx-0">
+    <MainContent className="w-full mx-0 bg-white/70 dark:bg-gray-900/0 dark:text-white">
+      {/* CHANGED: dark mode global gradient + white text */}
       <SidebarTrigger />
       <Header
         title="Dashboard Overview"
         subtitle="Welcome to your dashboard"
         actions={headerActions}
+        className="dark:text-white  text-white"
       />
 
       {/* Metrics Grid */}
       <section className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-6 w-full mx-0">
         {metricsData &&
           metricsData.map((metric) => (
-            <Card key={metric.id} className="flex flex-col">
-              <h3 className="text-lg font-semibold text-gray-900">{metric.title}</h3>
+            <Card
+              key={metric.id}
+              className="flex flex-col bg-white dark:bg-[#25314d] rounded-lg shadow-md p-4"
+            >
+              {/* CHANGED: added dark card background */}
+              <h3 className="text-lg font-semibold text-gray-900 dark:text-white">
+                {/* CHANGED: dark text */}
+                {metric.title}
+              </h3>
               <div className="mt-2 flex items-baseline">
-                <p className="text-3xl font-bold text-gray-900">
+                <p className="text-3xl font-bold text-gray-900 dark:text-gray-100">
+                  {/* CHANGED: dark text */}
                   {metric.title === "Total Revenue"
                     ? `$${metric.value.toLocaleString()}`
                     : metric.title === "Conversion Rate"
@@ -132,9 +147,12 @@ export default function Dashboard() {
                 </p>
                 <p
                   className={`ml-2 text-sm ${
-                    metric.change >= 0 ? "text-green-600" : "text-red-600"
+                    metric.change >= 0
+                      ? "text-green-600 dark:text-green-400"
+                      : "text-red-600 dark:text-red-400"
                   }`}
                 >
+                  {/* CHANGED: lighter green/red in dark mode */}
                   {metric.change >= 0 ? "+" : ""}
                   {metric.change}%
                 </p>
@@ -143,19 +161,23 @@ export default function Dashboard() {
           ))}
       </section>
 
-      {/* Charts Grid  */}
+      {/* Charts Grid */}
       <div className="flex flex-col gap-6 mb-6 w-full mx-0">
         {/* First row: Bar & Line charts */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-          {/* Bar Chart */}
-          <Card title="Revenue Overview" className="flex flex-col">
+          <Card
+            title="Revenue Overview"
+            className="flex flex-col bg-white dark:bg-[#25314d] rounded-lg shadow-md p-4"
+          >
+            {/* CHANGED: added dark card background */}
             {barChartLoading ? (
               <div className="flex justify-center items-center h-80">
                 <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-blue-500"></div>
               </div>
             ) : barChartError ? (
               <div className="flex justify-center items-center h-80">
-                <p className="text-red-500">
+                <p className="text-red-500 dark:text-red-400">
+                  {/* CHANGED: dark text */}
                   Error loading chart data: {barChartError}
                 </p>
               </div>
@@ -170,15 +192,19 @@ export default function Dashboard() {
             )}
           </Card>
 
-          {/* Line Chart */}
-          <Card title="Sales Trend" className="flex flex-col">
+          <Card
+            title="Sales Trend"
+            className="flex flex-col bg-white dark:bg-[#25314d] rounded-lg shadow-md p-4"
+          >
+            {/* CHANGED: added dark card background */}
             {lineChartLoading ? (
               <div className="flex justify-center items-center h-80">
                 <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-blue-500"></div>
               </div>
             ) : lineChartError ? (
               <div className="flex justify-center items-center h-80">
-                <p className="text-red-500">
+                <p className="text-red-500 dark:text-red-400">
+                  {/* CHANGED: dark text */}
                   Error loading chart data: {lineChartError}
                 </p>
               </div>
@@ -196,15 +222,19 @@ export default function Dashboard() {
 
         {/* Second row: Pie & Scatter charts */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-          {/* Pie Chart */}
-          <Card title="Market Share" className="flex flex-col">
+          <Card
+            title="Market Share"
+            className="flex flex-col bg-white dark:bg-[#25314d] rounded-lg shadow-md p-4"
+          >
+            {/* CHANGED: added dark card background */}
             {pieChartLoading ? (
               <div className="flex justify-center items-center h-80">
                 <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-blue-500"></div>
               </div>
             ) : pieChartError ? (
               <div className="flex justify-center items-center h-80">
-                <p className="text-red-500">
+                <p className="text-red-500 dark:text-red-400">
+                  {/* CHANGED: dark text */}
                   Error loading chart data: {pieChartError}
                 </p>
               </div>
@@ -219,15 +249,19 @@ export default function Dashboard() {
             )}
           </Card>
 
-          {/* Scatter Chart */}
-          <Card title="Performance Distribution" className="flex flex-col">
+          <Card
+            title="Performance Distribution"
+            className="flex flex-col bg-white dark:bg-[#25314d] rounded-lg shadow-md p-4"
+          >
+            {/* CHANGED: added dark card background */}
             {scatterChartLoading ? (
               <div className="flex justify-center items-center h-80">
                 <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-blue-500"></div>
               </div>
             ) : scatterChartError ? (
               <div className="flex justify-center items-center h-80">
-                <p className="text-red-500">
+                <p className="text-red-500 dark:text-red-400">
+                  {/* CHANGED: dark text */}
                   Error loading chart data: {scatterChartError}
                 </p>
               </div>
@@ -249,7 +283,7 @@ export default function Dashboard() {
         <SalesChart />
       </div>
 
-      <Footer className="w-full mx-auto" /> 
+      <Footer className="w-full mx-auto" />
     </MainContent>
   );
 }

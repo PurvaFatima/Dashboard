@@ -99,14 +99,14 @@ export default function DataTable({ data }) {
   const totalPage = table.getRowModel().rows.reduce((s, row) => s + Number(row.original.amount ?? 0), 0);
 
   return (
-    <div className="w-full">
+    <div className="w-full bg-white/70 dark:bg-gray-900/60 p-4 rounded-lg shadow">
       {/* Search */}
       <div className="flex items-center justify-between mb-4">
-        <Input
+        <Input        
           placeholder="Search description..."
           value={globalFilter}
           onChange={(e) => setGlobalFilter(e.target.value)}
-          className="max-w-sm"
+          className="max-w-sm text-black dark:text-white dark:placeholder:text-gray-100"
         />
         <div className="text-sm">
           Total (all): <strong>{new Intl.NumberFormat(undefined, { style: "currency", currency: "USD" }).format(totalAll)}</strong>

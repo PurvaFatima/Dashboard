@@ -23,15 +23,9 @@ import { auth, googleProvider } from "@/firebase"
 // Router
 import { useNavigate, Link } from "react-router-dom"
 
-/**
- * SignupForm Component
- * Handles new user registration with email/password or Google account.
- * Includes validation using React Hook Form + Zod.
- */
 const SignupForm = ({ className, ...props }) => {
   const navigate = useNavigate()
 
-  // React Hook Form setup with Zod schema
   const {
     register,
     handleSubmit,
@@ -40,28 +34,21 @@ const SignupForm = ({ className, ...props }) => {
     resolver: zodResolver(signupSchema),
   })
 
-  /**
-   * Handle signup with email/password
-   */
   const onSubmit = async (data) => {
-    console.log("Signup Data:", data)
     try {
       await createUserWithEmailAndPassword(auth, data.email, data.password)
       alert("Please sign in!")
-      navigate("/login") // Redirect after signup
+      navigate("/login")
     } catch (err) {
       alert(err.message)
     }
   }
 
-  /**
-   * Handle Google Sign Up
-   */
   const handleGoogleSignup = async () => {
     try {
       await signInWithPopup(auth, googleProvider)
       alert("Please sign in!")
-      navigate("/login") // Redirect after signup
+      navigate("/login")
     } catch (err) {
       alert(err.message)
     }
@@ -75,18 +62,20 @@ const SignupForm = ({ className, ...props }) => {
       )}
       {...props}
     >
-      <Card className="p-6 shadow-2xl rounded-2xl border border-gray-200 bg-white/90 backdrop-blur">
+      {/* CHANGED: card now supports dark mode */}
+      <Card className="p-6 shadow-2xl rounded-2xl border border-gray-200 bg-white/90 backdrop-blur 
+        dark:bg-[#25314d]/90 dark:border-gray-700 dark:shadow-lg">
+        
         {/* Header */}
         <CardHeader className="space-y-2 text-center">
-          <CardTitle className="text-2xl font-bold text-gray-900">
+          <CardTitle className="text-2xl font-bold text-gray-900 dark:text-white">
             Create an account
           </CardTitle>
-          <CardDescription className="text-gray-600">
+          <CardDescription className="text-gray-600 dark:text-gray-300">
             Fill in the details below to sign up
           </CardDescription>
         </CardHeader>
 
-        {/* Content */}
         <CardContent>
           <form
             onSubmit={handleSubmit(onSubmit)}
@@ -94,12 +83,15 @@ const SignupForm = ({ className, ...props }) => {
           >
             {/* Email Field */}
             <div className="grid gap-3">
-              <Label htmlFor="email">Email</Label>
+              <Label htmlFor="email" className="dark:text-gray-200">Email</Label>
+              {/* CHANGED: input styles for dark mode */}
               <Input
                 type="email"
                 {...register("email")}
                 placeholder="m@example.com"
                 required
+                className="dark:bg-[#1f2a44] dark:text-white dark:placeholder-gray-400 
+                  dark:border-gray-600 focus:dark:border-blue-400"
               />
               {errors.email && (
                 <p className="text-red-500 text-sm">{errors.email.message}</p>
@@ -108,43 +100,56 @@ const SignupForm = ({ className, ...props }) => {
 
             {/* Password Field */}
             <div className="grid gap-3">
-              <Label htmlFor="password">Password</Label>
-              <Input type="password" {...register("password")} required />
+              <Label htmlFor="password" className="dark:text-gray-200">Password</Label>
+              <Input
+                type="password"
+                {...register("password")}
+                required
+                className="dark:bg-[#1f2a44] dark:text-white dark:placeholder-gray-400 
+                  dark:border-gray-600 focus:dark:border-blue-400"
+              />
               {errors.password && (
-                <p className="text-red-500 text-sm">
-                  {errors.password.message}
-                </p>
+                <p className="text-red-500 text-sm">{errors.password.message}</p>
               )}
             </div>
 
             {/* Confirm Password Field */}
             <div className="grid gap-3">
-              <Label htmlFor="confirmPassword">Confirm Password</Label>
-              <Input type="password" {...register("confirmPassword")} required />
+              <Label htmlFor="confirmPassword" className="dark:text-gray-200">Confirm Password</Label>
+              <Input
+                type="password"
+                {...register("confirmPassword")}
+                required
+                className="dark:bg-[#1f2a44] dark:text-white dark:placeholder-gray-400 
+                  dark:border-gray-600 focus:dark:border-blue-400"
+              />
               {errors.confirmPassword && (
-                <p className="text-red-500 text-sm">
-                  {errors.confirmPassword.message}
-                </p>
+                <p className="text-red-500 text-sm">{errors.confirmPassword.message}</p>
               )}
             </div>
 
-            {/* Action Buttons */}
+            {/* Buttons */}
             <div className="flex flex-col gap-3">
-              <Button type="submit" className="w-full">
+              <Button 
+                type="submit" 
+                className="w-full hover:shadow-md dark:hover:shadow-blue-900/50"
+              >
                 Sign Up
               </Button>
               <Button
                 type="button"
                 variant="outline"
                 onClick={handleGoogleSignup}
-                className="w-full"
+                className="w-full 
+                  dark:bg-blue-600 dark:hover:bg-blue-700 dark:border-none text-white
+                  hover:shadow-md dark:hover:shadow-blue-900/50"
               >
                 Sign Up with Google
               </Button>
             </div>
 
             {/* Login Link */}
-            <div className="mt-4 text-center text-sm">
+            <div className="mt-4 text-center text-sm text-gray-700 dark:text-gray-300">
               Already have an account?{" "}
               <Link to="/login" className="underline underline-offset-4">
                 Login
