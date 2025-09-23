@@ -20,7 +20,6 @@ export default function Dashboard() {
   const headerActions = [
     {
       label: "Refresh",
-      variant: "Primary",
       onClick: () => window.location.reload(),
     },
   ];
@@ -54,8 +53,7 @@ export default function Dashboard() {
   // Loading State
   if (metricsLoading) {
     return (
-      <MainContent className="w-full mx-0 dark:bg-gradient-to-br dark:from-[#4b6cb7] dark:to-[#182848] dark:text-white"> 
-        {/* CHANGED: dark mode global gradient + white text */}
+      <MainContent className="w-full mx-0 bg-amber-50 dark:bg-gray-900 dark:!text-blue-300"> 
         <SidebarTrigger />
         <Header
           title="Dashboard Overview"
@@ -79,8 +77,8 @@ export default function Dashboard() {
   // Error State
   if (metricsError) {
     return (
-      <MainContent className="w-full mx-0 dark:bg-gradient-to-br dark:from-[#4b6cb7] dark:to-[#182848] dark:text-white">
-        {/* CHANGED: dark mode global gradient + white text */}
+      <MainContent className="w-full mx-0 dark:text-white">
+        {/* CHANGED: dark mode white text */}
         <SidebarTrigger />
         <Header
           title="Dashboard Overview"
@@ -90,11 +88,11 @@ export default function Dashboard() {
         <div className="flex justify-center items-center h-64">
           <div className="text-center">
             <div className="text-red-500 text-5xl mb-4">⚠️</div>
-            <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-2">
+            <h3 className="text-xl font-semibold dark:text-white mb-2">
               {/* CHANGED: dark mode text */}
               Error Loading Data
             </h3>
-            <p className="text-gray-600 dark:text-gray-300 mb-4">
+            <p className=" mb-4">
               {/* CHANGED: dark mode text */}
               {metricsError}
             </p>
@@ -113,14 +111,14 @@ export default function Dashboard() {
 
   // Success State
   return (
-    <MainContent className="w-full mx-0 bg-white/70 dark:bg-gray-900/0 dark:text-white">
+    <MainContent className="w-full mx-0 bg-white/70 dark:bg-gray-900/0 dark:!text-white">
       {/* CHANGED: dark mode global gradient + white text */}
       <SidebarTrigger />
       <Header
         title="Dashboard Overview"
         subtitle="Welcome to your dashboard"
         actions={headerActions}
-        className="dark:text-white  text-white"
+        className="text-gray-900 dark:!text-blue-300"
       />
 
       {/* Metrics Grid */}

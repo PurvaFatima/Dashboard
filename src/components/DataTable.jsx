@@ -99,7 +99,7 @@ export default function DataTable({ data }) {
   const totalPage = table.getRowModel().rows.reduce((s, row) => s + Number(row.original.amount ?? 0), 0);
 
   return (
-    <div className="w-full bg-white/70 dark:bg-gray-900/60 p-4 rounded-lg shadow">
+    <div className="w-full bg-white/70 dark:bg-gray-900/60 dark:text-amber-50 p-4 rounded-lg shadow">
       {/* Search */}
       <div className="flex items-center justify-between mb-4">
         <Input        

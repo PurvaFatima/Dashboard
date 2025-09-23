@@ -15,6 +15,10 @@ import {
 import { onAuthStateChanged, signOut } from "firebase/auth"
 import { useEffect, useState } from "react"
 import { auth } from "../firebase"
+import LogoLight from "../assets/2.png"
+import LogoDark from "../assets/1.png"
+
+// Sidebar component with Firebase auth integration
 
 export function AppSidebar() {
   const [email, setEmail] = useState(null)
@@ -48,7 +52,6 @@ export function AppSidebar() {
   return (
     <Sidebar
       collapsible="icon"
-      variant="floating"
       className="rounded-2xl"
       /* rounded corners for modern look */
     >
@@ -57,10 +60,28 @@ export function AppSidebar() {
         className="flex items-center text-black dark:text-amber-100 justify-center py-4 bg-gradient-to-r from-blue-400 to-75% shadow-md"
         /* CHANGED: header kept gradient but explicitly ensured white text and shadow for contrast */
       >
-        <Home className="w-6 h-6 text-current" /* CHANGED: text-current so icon inherits text color */ />
-        <h2 className="hidden group-data-[collapsible=icon]:hidden sm:inline text-lg font-bold tracking-wide ml-2">
-          My Dashboard
-        </h2>
+        {/* Light Logo */}
+        <img
+    src={LogoLight}
+    alt="App Logo"
+    className="
+      object-contain transition-all duration-300
+      h-15 w-auto
+      group-data-[collapsible=icon]:h-8 group-data-[collapsible=icon]:w-8
+      dark:hidden 
+    "
+  />
+
+  {/* Dark Logo */}
+  <img
+    src={LogoDark}
+    alt="App Logo"
+    className="
+      hidden dark:block object-contain transition-all duration-300
+      h-15 w-auto
+      group-data-[collapsible=icon]:h-8 group-data-[collapsible=icon]:w-8
+    "
+  />
       </SidebarHeader>
 
       {/* --- MAIN CONTENT --- */}
@@ -72,7 +93,7 @@ export function AppSidebar() {
                 <SidebarMenuItem key={item.title}>
                   <SidebarMenuButton
                     asChild
-                    className="text-white hover:bg-white/10 hover:text-pink-200 transition"
+                    className="text-white hover:bg-white/10 hover:text-pink-200 transition dark:!text-white"
                     /* CHANGED: force white text for menu items, subtle hover bg & hover text for feedback */
                   >
                     <Link to={item.url} className="flex items-center gap-3">
@@ -96,7 +117,7 @@ export function AppSidebar() {
       >
         
         {/* Avatar & Email */}
-        <div className="flex flex-col items-center gap-2">
+        <div className="flex flex-row items-center gap-2">
           <div
             className="h-10 w-10 rounded-full bg-black dark:bg-amber-100 text-blue-500 flex items-center justify-center text-lg font-bold shadow"
             /* CHANGED: avatar bg white and purple text to keep contrast and brand color */
@@ -109,19 +130,6 @@ export function AppSidebar() {
           >
             {email || "Guest"}
           </p>
-        </div>
-
-        {/* Links */}
-        <div
-          className="flex flex-col items-center gap-1 text-xs text-white/60 group-data-[collapsible=icon]:hidden"
-          /* CHANGED: link text color set to white/60, hover color below */
-        >
-          <a href="#" className="hover:text-pink-200 transition">
-            Privacy Policy
-          </a>
-          <a href="#" className="hover:text-pink-200 transition">
-            Contact Us
-          </a>
         </div>
 
         {/* Logout Button */}
