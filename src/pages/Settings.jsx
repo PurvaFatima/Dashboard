@@ -1,6 +1,9 @@
 import { useState } from 'react';
 import { useTheme } from "../components/theme-provider"
 import { Moon, Sun } from "lucide-react"
+import { onAuthStateChanged } from "firebase/auth"
+import { useEffect } from "react"
+import { auth } from "../firebase"
 
 const Settings = () => {
   const { theme, setTheme } = useTheme()
@@ -11,6 +14,16 @@ const Settings = () => {
   });
   const [username, setUsername] = useState('JohnDoe');
   const [email, setEmail] = useState('john.doe@example.com');
+
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, (user) => {
+      if (user?.email) {
+        setEmail(user.email)
+        setUsername(user.email.split("@")[0]) // ✅ username from email
+      }
+    })
+    return () => unsubscribe()
+  }, [])
 
   const handleNotificationChange = (type) => {
     setNotifications((prev) => ({ ...prev, [type]: !prev[type] }));
@@ -32,27 +45,33 @@ const Settings = () => {
         <section className="mb-8">
           <h2 className="text-xl font-semibold text-gray-900 dark:text-white mb-4">Profile</h2>
           <div className="space-y-4">
-            <div>
-              <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">Username</label>
-              {/* CHANGED: input background + border for dark mode */}
-              <input
-                type="text"
-                value={username}
-                onChange={(e) => setUsername(e.target.value)}
-                className="mt-1 w-full p-2 border rounded-md bg-white dark:bg-gray-800 text-gray-900 dark:text-white border-gray-300 dark:border-gray-600 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm"
-              />
-            </div>
-            <div>
-              <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">Email</label>
-              {/* CHANGED: input background + border for dark mode */}
-              <input
-                type="email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                className="mt-1 w-full p-2 border rounded-md bg-white dark:bg-gray-800 text-gray-900 dark:text-white border-gray-300 dark:border-gray-600 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm"
-              />
-            </div>
-          </div>
+  <div>
+    <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">
+      Username
+    </label>
+    {/* Read-only username */}
+    <input
+      type="text"
+      value={username}
+      onChange={(e) => setUsername(e.target.value)}
+      readOnly
+      className="mt-1 w-full p-2 border rounded-md bg-white dark:bg-gray-800 text-gray-900 dark:text-white border-gray-300 dark:border-gray-600 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm"
+    />
+  </div>
+  <div>
+    <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">
+      Email
+    </label>
+    {/* Read-only email from Firebase */}
+    <input
+      type="email"
+      value={email || ""}
+      readOnly
+      className="mt-1 w-full p-2 border rounded-md bg-white dark:bg-gray-800 text-gray-900 dark:text-white border-gray-300 dark:border-gray-600 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm"
+    />
+  </div>
+</div>
+
         </section>
 
         {/* Theme Section */}

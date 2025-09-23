@@ -103,6 +103,7 @@ body {
 h1 {
   font-size: 3.2em;
   line-height: 1.1;
+  color: #8db3f0;
 }
 
 button {
@@ -176,13 +177,11 @@ button:focus-visible {
   --color-sidebar-ring: var(--sidebar-ring);
 }
 
-.dark body {
-  @apply bg-gradient-to-b from-blue-500 to-black text-white;
-}
-
 .dark {
   --background: oklch(0.145 0 0);
   --foreground: oklch(0.985 0 0);
+  --text-primary: oklch(0.985 0 0);
+  --text-secondary: oklch(0.708 0 0);
   --card: oklch(0.205 0 0);
   --card-foreground: oklch(0.985 0 0);
   --popover: oklch(0.205 0 0);
